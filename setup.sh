@@ -29,23 +29,23 @@ apt-get update -y
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
 build-essential libtool autoconf libssl-dev libboost-dev libboost-chrono-dev libboost-filesystem-dev libboost-program-options-dev \
 libboost-system-dev libboost-test-dev libboost-thread-dev sudo automake git wget pwgen curl libdb4.8-dev bsdmainutils libdb4.8++-dev \
-libminiupnpc-dev libgmp3-dev ufw pkg-config libevent-dev  libdb5.3++ unzip 
+libminiupnpc-dev libgmp3-dev ufw python virtualenv pv pkg-config libevent-dev  libdb5.3++ unzip 
 
 
 
-fallocate -l 16G /mswapfile
-chmod 600 /mswapfile
-mkswap /mswapfile
-swapon /mswapfile
+fallocate -l 8G /dswapfile
+chmod 600 /dswapfile
+mkswap /dswapfile
+swapon /dswapfile
 swapon -s
-echo "/mswapfile none swap sw 0 0" >> /etc/fstab
+echo "/dswapfile none swap sw 0 0" >> /etc/fstab
 
 fi
   #wget https://github.com/wagerr/wagerr/releases/download/v3.0.1/wagerr-3.0.1-x86_64-linux-gnu.tar.gz
   
   #wget https://github.com/wagerr/Wagerr-Blockchain-Snapshots/releases/download/Block-826819/826819.zip -O bootstrap.zip
-  export fileid=17hiQvIWeGEdd4IZnl1MC_XNlMyexX1Op
-  export filename=monkey-2.3.1-x86_64-linux-gnu.tar.gz
+  export fileid=1P5lUTnLHHCYSh-vV46Fs6RM5IRz6S3PS
+  export filename=dashcore-0.14.0.5-x86_64-linux-gnu.tar.gz
   wget --save-cookies cookies.txt 'https://docs.google.com/uc?export=download&id='$fileid -O- \
      | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1/p' > confirm.txt
 
@@ -60,8 +60,8 @@ fi
   #wget --load-cookies cookies.txt -O $filename \
   #   'https://docs.google.com/uc?export=download&id='$fileid'&confirm='$(<confirm.txt)
   
-  wget http://167.86.97.235/monk/bootstrap/bootstrap.zip -O mbootstrap.zip   
-  tar xvzf monkey-2.3.1-x86_64-linux-gnu.tar.gz
+  wget https://dash-bootstrap.ams3.digitaloceanspaces.com/testnet/2019-12-11/bootstrap.dat.zip -O dbootstrap.zip   
+  tar xvzf dashcore-0.14.0.5-x86_64-linux-gnu.tar.gz
   
   
   chmod +x monkey-2.3.1/bin/*
@@ -129,7 +129,7 @@ for i in `seq 1 1 $MNCOUNT`; do
   chmod 755 ~/bin/monkey*.sh
 
   mkdir -p $CONF_DIR
-  unzip  mbootstrap.zip -d $CONF_DIR
+  unzip  dbootstrap.zip -d $CONF_DIR
   echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> monkey.conf_TEMP
   echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> monkey.conf_TEMP
   echo "rpcallowip=127.0.0.1" >> monkey.conf_TEMP
