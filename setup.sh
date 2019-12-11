@@ -64,9 +64,9 @@ fi
   tar xvzf dashcore-0.14.0.5-x86_64-linux-gnu.tar.gz
   
   
-  chmod +x monkey-2.3.1/bin/*
-  sudo mv  monkey-2.3.1/bin/* /usr/local/bin
-  rm -rf monkey-2.3.1-x86_64-linux-gnu.tar.gz
+  chmod +x dashcore-0.14.0/bin/*
+  sudo mv  dashcore-0.14.0/bin/* /usr/local/bin
+  rm -rf dashcore-0.14.0.5-x86_64-linux-gnu.tar.gz
 
   sudo apt install -y ufw
   sudo ufw allow ssh/tcp
@@ -110,80 +110,50 @@ for i in `seq 1 1 $MNCOUNT`; do
   echo "The RPC port is $RPCPORT"
 
   ALIAS=${ALIAS}
-  CONF_DIR=~/.monkey_$ALIAS
+  CONF_DIR=~/.dash_$ALIAS
   
-  #fallocate -l 1.5G /swapfile$ALIAS
-  #chmod 600 /swapfile$ALIAS
-  #mkswap /swapfile$ALIAS
-  #swapon /swapfile$ALIAS
-  #swapon -s
-  #echo "/swapfile$ALIAS none swap sw 0 0" >> /etc/fstab
-
   # Create scripts
-  echo '#!/bin/bash' > ~/bin/monkeyd_$ALIAS.sh
-  echo "monkeyd -daemon -conf=$CONF_DIR/monkey.conf -datadir=$CONF_DIR "'$*' >> ~/bin/monkeyd_$ALIAS.sh
-  echo '#!/bin/bash' > ~/bin/monkey-cli_$ALIAS.sh
-  echo "monkey-cli -conf=$CONF_DIR/monkey.conf -datadir=$CONF_DIR "'$*' >> ~/bin/monkey-cli_$ALIAS.sh
-  echo '#!/bin/bash' > ~/bin/monkey-tx_$ALIAS.sh
-  echo "monkey-tx -conf=$CONF_DIR/monkey.conf -datadir=$CONF_DIR "'$*' >> ~/bin/monkey-tx_$ALIAS.sh 
-  chmod 755 ~/bin/monkey*.sh
+  echo '#!/bin/bash' > ~/bin/dashd_$ALIAS.sh
+  echo "dashd -daemon -conf=$CONF_DIR/dash.conf -datadir=$CONF_DIR "'$*' >> ~/bin/dashd_$ALIAS.sh
+  echo '#!/bin/bash' > ~/bin/dash-cli_$ALIAS.sh
+  echo "dash-cli -conf=$CONF_DIR/dash.conf -datadir=$CONF_DIR "'$*' >> ~/bin/dash-cli_$ALIAS.sh
+  chmod 755 ~/bin/dash*.sh
 
   mkdir -p $CONF_DIR
   unzip  dbootstrap.zip -d $CONF_DIR
-  echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> monkey.conf_TEMP
-  echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> monkey.conf_TEMP
-  echo "rpcallowip=127.0.0.1" >> monkey.conf_TEMP
-  echo "rpcport=$RPCPORT" >> monkey.conf_TEMP
-  echo "listen=1" >> monkey.conf_TEMP
-  echo "server=1" >> monkey.conf_TEMP
-  echo "daemon=1" >> monkey.conf_TEMP
-  echo "logtimestamps=1" >> monkey.conf_TEMP
-  echo "maxconnections=256" >> monkey.conf_TEMP
-  echo "masternode=1" >> monkey.conf_TEMP
-  echo "" >> monkey.conf_TEMP
-  echo "addnode=95.216.57.97:37233" >> monkey.conf_TEMP
-  echo "addnode=195.147.39.216:37233" >> monkey.conf_TEMP
-  echo "addnode=188.40.173.194:37233" >> monkey.conf_TEMP
-  echo "addnode=95.179.146.178:37233" >> monkey.conf_TEMP
-  echo "addnode=45.32.186.230:37233" >> monkey.conf_TEMP
-  echo "addnode=37.221.193.199:37233" >> monkey.conf_TEMP
-  echo "addnode=134.255.227.59:37233" >> monkey.conf_TEMP
-  echo "addnode=164.68.113.242:37233" >> monkey.conf_TEMP
-  echo "addnode=80.209.224.35:37233" >> monkey.conf_TEMP
-  echo "addnode=90.219.213.203:37233" >> monkey.conf_TEMP
-  echo "addnode=152.136.73.10:37233" >> monkey.conf_TEMP
-  echo "addnode=199.247.18.75" >> monkey.conf_TEMP
-  echo "addnode=95.216.230.129" >> monkey.conf_TEMP
-  echo "addnode=78.141.219.202" >> monkey.conf_TEMP
-  echo "addnode=82.155.135.121" >> monkey.conf_TEMP
-  echo "addnode=68.108.190.77" >> monkey.conf_TEMP
-  echo "addnode=77.78.204.210" >> monkey.conf_TEMP
-  echo "addnode=95.164.8.207" >> monkey.conf_TEMP
-  echo "addnode=5.189.156.181" >> monkey.conf_TEMP
-  echo "addnode=185.241.54.23" >> monkey.conf_TEMP
-  echo "addnode=45.32.205.238" >> monkey.conf_TEMP
-  echo "addnode=195.147.39.216" >> monkey.conf_TEMP
-
-  echo "" >> monkey.conf_TEMP
-  echo "port=$PORT" >> monkey.conf_TEMP
-  echo "masternodeaddr=$IP:37233" >> monkey.conf_TEMP
-  echo "masternodeprivkey=$PRIVKEY" >> monkey.conf_TEMP
+  echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> dash.conf_TEMP
+  echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> dash.conf_TEMP
+  echo "rpcallowip=127.0.0.1" >> dash.conf_TEMP
+  echo "rpcport=$RPCPORT" >> dash.conf_TEMP
+  echo "testnet=1" >> dash.conf_TEMP
+  echo "listen=1" >> dash.conf_TEMP
+  echo "server=1" >> dash.conf_TEMP
+  echo "daemon=1" >> dash.conf_TEMP
+  echo "logtimestamps=1" >> dash.conf_TEMP
+  echo "maxconnections=256" >> dash.conf_TEMP
+  echo "masternode=1" >> dash.conf_TEMP
+  echo "" >> dash.conf_TEMP
+ 
+  echo "" >> dash.conf_TEMP
+  echo "port=$PORT" >> dash.conf_TEMP
+  
+  echo "masternodeblsprivkey=$PRIVKEY" >> dash.conf_TEMP
   sudo ufw allow $PORT/tcp
 
-  mv monkey.conf_TEMP $CONF_DIR/monkey.conf
+  mv dash.conf_TEMP $CONF_DIR/dash.conf
   
   #sh ~/bin/wagerrd_$ALIAS.sh
   
-  cat << EOF > /etc/systemd/system/monkey_$ALIAS.service
+  cat << EOF > /etc/systemd/system/dash_$ALIAS.service
 [Unit]
-Description=monkey_$ALIAS service
+Description=dash_$ALIAS service
 After=network.target
 [Service]
 User=root
 Group=root
 Type=forking
-ExecStart=/usr/local/bin/monkeyd -daemon -conf=$CONF_DIR/monkey.conf -datadir=$CONF_DIR
-ExecStop=/usr/local/bin/monkey-cli -conf=$CONF_DIR/monkey.conf -datadir=$CONF_DIR stop
+ExecStart=/usr/local/bin/dashd -daemon -conf=$CONF_DIR/dash.conf -datadir=$CONF_DIR
+ExecStop=/usr/local/bin/dash-cli -conf=$CONF_DIR/dash.conf -datadir=$CONF_DIR stop
 Restart=always
 PrivateTmp=true
 TimeoutStopSec=60s
@@ -195,11 +165,11 @@ EOF
 
   systemctl daemon-reload
   sleep 10
-  systemctl start monkey_$ALIAS.service
-  systemctl enable monkey_$ALIAS.service >/dev/null 2>&1
+  systemctl start dash_$ALIAS.service
+  systemctl enable dash_$ALIAS.service >/dev/null 2>&1
 
   #(crontab -l 2>/dev/null; echo "@reboot sh ~/bin/wagerrd_$ALIAS.sh") | crontab -
 #	   (crontab -l 2>/dev/null; echo "@reboot sh /root/bin/wagerrd_$ALIAS.sh") | crontab -
 #	   sudo service cron reload
-echo -e "$ALIAS $IP:37233 $PRIVKEY " >> masternode.conf
+echo -e "$ALIAS $IP:$PORT $PRIVKEY " >> masternode.conf
 done
