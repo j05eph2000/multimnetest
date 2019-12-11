@@ -176,8 +176,8 @@ venv/bin/pip install -r requirements.txt
 venv/bin/python bin/sentinel.py
 cd
 
- (crontab -l 2>/dev/null; echo "* * * * * cd $CONF_DIR/sentinel && ./venv/bin/python bin/sentinel.py 2>&1 >> sentinel-cron.log") | crontab -
- (crontab -l 2>/dev/null; echo "* * * * * pidof dashd || $CONF_DIR/dashd") | crontab -
-	   sudo service cron reload
+ #(crontab -l 2>/dev/null; echo "* * * * * cd $CONF_DIR/sentinel && ./venv/bin/python bin/sentinel.py 2>&1 >> sentinel-cron.log") | crontab -
+ #(crontab -l 2>/dev/null; echo "* * * * * pidof dashd || $CONF_DIR/dashd") | crontab -
+#	   sudo service cron reload
 echo -e "$ALIAS $IP:$PORT $PRIVKEY " >> masternode.conf
 done
