@@ -168,13 +168,13 @@ EOF
   systemctl start dash_$ALIAS.service
   systemctl enable dash_$ALIAS.service >/dev/null 2>&1
   
-cd $CONF_DIR
-git clone https://github.com/dashpay/sentinel.git
-cd sentinel
-virtualenv venv
-venv/bin/pip install -r requirements.txt
-venv/bin/python bin/sentinel.py
-cd
+#cd $CONF_DIR
+#git clone https://github.com/dashpay/sentinel.git
+#cd sentinel
+#virtualenv venv
+#venv/bin/pip install -r requirements.txt
+#venv/bin/python bin/sentinel.py
+#cd
 
  #(crontab -l 2>/dev/null; echo "* * * * * cd $CONF_DIR/sentinel && ./venv/bin/python bin/sentinel.py 2>&1 >> sentinel-cron.log") | crontab -
  #(crontab -l 2>/dev/null; echo "* * * * * pidof dashd || $CONF_DIR/dashd") | crontab -
