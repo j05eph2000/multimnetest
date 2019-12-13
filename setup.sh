@@ -156,8 +156,7 @@ ExecStart=/usr/local/bin/dashd -daemon -conf=$CONF_DIR/dash.conf -datadir=$CONF_
 ExecStop=/usr/local/bin/dash-cli -conf=$CONF_DIR/dash.conf -datadir=$CONF_DIR stop
 Restart=always
 PrivateTmp=true
-TimeoutStopSec=60s
-TimeoutStartSec=10s
+RestartSec=1
 StartLimitInterval=0
 [Install]
 WantedBy=multi-user.target
