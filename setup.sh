@@ -64,8 +64,10 @@ fi
   unzip ESKACOIN-Linux-Daemon.zip 
   
   
-  chmod +x ESKACOIN-Linux-Daemon/*
-  sudo mv  ESKACOIN-Linux-Daemon/* /usr/local/bin
+  chmod +x eskacoin-cli
+  chmod +x eskcoind
+  sudo mv  eskacoin-cli /usr/local/bin
+  sudo mv  eskcoind /usr/local/bin
   rm -rf ESKACOIN-Linux-Daemon.zip
 
   sudo apt install -y ufw
