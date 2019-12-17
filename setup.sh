@@ -43,14 +43,14 @@ echo "/dswapfile none swap sw 0 0" >> /etc/fstab
 fi
   #wget https://github.com/wagerr/wagerr/releases/download/v3.0.1/wagerr-3.0.1-x86_64-linux-gnu.tar.gz
   
-  #wget https://github.com/wagerr/Wagerr-Blockchain-Snapshots/releases/download/Block-826819/826819.zip -O bootstrap.zip
-  export fileid=1umXHQ5BTfj9Kw6PxzHtpG7sbkE_rTckI
-  export filename=ESKACOIN-Linux-Daemon.zip
-  wget --save-cookies cookies.txt 'https://docs.google.com/uc?export=download&id='$fileid -O- \
-     | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1/p' > confirm.txt
+  wget https://github.com/EskaCoin/Eskacoin-Project/releases/download/v1.0.0/ESKACOIN-Linux-Daemon.zip -O ESKACOIN-Linux-Daemon.zip
+  #export fileid=1umXHQ5BTfj9Kw6PxzHtpG7sbkE_rTckI
+  #export filename=ESKACOIN-Linux-Daemon.zip
+  #wget --save-cookies cookies.txt 'https://docs.google.com/uc?export=download&id='$fileid -O- \
+  #   | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1/p' > confirm.txt
 
-  wget --load-cookies cookies.txt -O $filename \
-     'https://docs.google.com/uc?export=download&id='$fileid'&confirm='$(<confirm.txt)
+  #wget --load-cookies cookies.txt -O $filename \
+  #   'https://docs.google.com/uc?export=download&id='$fileid'&confirm='$(<confirm.txt)
 
   #export fileid=1GiSVHogUMeePxPbjuyDwg6jgYLrN7jbm
   #export filename=bootstrap.zip
