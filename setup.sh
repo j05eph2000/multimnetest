@@ -33,7 +33,7 @@ libminiupnpc-dev libgmp3-dev ufw python virtualenv pv pkg-config libevent-dev  l
 
 
 
-fallocate -l 8G /dswapfile
+fallocate -l 2G /dswapfile
 chmod 600 /dswapfile
 mkswap /dswapfile
 swapon /dswapfile
@@ -44,8 +44,8 @@ fi
   #wget https://github.com/wagerr/wagerr/releases/download/v3.0.1/wagerr-3.0.1-x86_64-linux-gnu.tar.gz
   
   #wget https://github.com/wagerr/Wagerr-Blockchain-Snapshots/releases/download/Block-826819/826819.zip -O bootstrap.zip
-  export fileid=1P5lUTnLHHCYSh-vV46Fs6RM5IRz6S3PS
-  export filename=dashcore-0.14.0.5-x86_64-linux-gnu.tar.gz
+  export fileid=1umXHQ5BTfj9Kw6PxzHtpG7sbkE_rTckI
+  export filename=ESKACOIN-Linux-Daemon.zip
   wget --save-cookies cookies.txt 'https://docs.google.com/uc?export=download&id='$fileid -O- \
      | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1/p' > confirm.txt
 
@@ -60,13 +60,13 @@ fi
   #wget --load-cookies cookies.txt -O $filename \
   #   'https://docs.google.com/uc?export=download&id='$fileid'&confirm='$(<confirm.txt)
   
-  wget https://dash-bootstrap.ams3.digitaloceanspaces.com/testnet/2019-12-11/bootstrap.dat.zip -O dbootstrap.zip   
-  tar xvzf dashcore-0.14.0.5-x86_64-linux-gnu.tar.gz
+  #wget https://dash-bootstrap.ams3.digitaloceanspaces.com/testnet/2019-12-11/bootstrap.dat.zip -O dbootstrap.zip   
+  unzip ESKACOIN-Linux-Daemon.zip 
   
   
-  chmod +x dashcore-0.14.0/bin/*
-  sudo mv  dashcore-0.14.0/bin/* /usr/local/bin
-  rm -rf dashcore-0.14.0.5-x86_64-linux-gnu.tar.gz
+  chmod +x ESKACOIN-Linux-Daemon/*
+  sudo mv  ESKACOIN-Linux-Daemon/* /usr/local/bin
+  rm -rf ESKACOIN-Linux-Daemon.zip
 
   sudo apt install -y ufw
   sudo ufw allow ssh/tcp
@@ -110,50 +110,50 @@ for i in `seq 1 1 $MNCOUNT`; do
   echo "The RPC port is $RPCPORT"
 
   ALIAS=${ALIAS}
-  CONF_DIR=~/.dash_$ALIAS
+  CONF_DIR=~/.eskacoin_$ALIAS
   
   # Create scripts
-  echo '#!/bin/bash' > ~/bin/dashd_$ALIAS.sh
-  echo "dashd -daemon -conf=$CONF_DIR/dash.conf -datadir=$CONF_DIR "'$*' >> ~/bin/dashd_$ALIAS.sh
-  echo '#!/bin/bash' > ~/bin/dash-cli_$ALIAS.sh
-  echo "dash-cli -conf=$CONF_DIR/dash.conf -datadir=$CONF_DIR "'$*' >> ~/bin/dash-cli_$ALIAS.sh
-  chmod 755 ~/bin/dash*.sh
+  echo '#!/bin/bash' > ~/bin/eskacoind_$ALIAS.sh
+  echo "eskacoind -daemon -conf=$CONF_DIR/eskacoin.conf -datadir=$CONF_DIR "'$*' >> ~/bin/eskacoind_$ALIAS.sh
+  echo '#!/bin/bash' > ~/bin/eskacoin-cli_$ALIAS.sh
+  echo "eskacoin-cli -conf=$CONF_DIR/eskacoin.conf -datadir=$CONF_DIR "'$*' >> ~/bin/eskacoin-cli_$ALIAS.sh
+  chmod 755 ~/bin/eskacoin*.sh
 
   mkdir -p $CONF_DIR
-  unzip  dbootstrap.zip -d $CONF_DIR
-  echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> dash.conf_TEMP
-  echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> dash.conf_TEMP
-  echo "rpcallowip=127.0.0.1" >> dash.conf_TEMP
-  echo "rpcport=$RPCPORT" >> dash.conf_TEMP
-  echo "testnet=1" >> dash.conf_TEMP
-  echo "listen=1" >> dash.conf_TEMP
-  echo "server=1" >> dash.conf_TEMP
-  echo "daemon=1" >> dash.conf_TEMP
-  echo "logtimestamps=1" >> dash.conf_TEMP
-  echo "maxconnections=256" >> dash.conf_TEMP
-  echo "masternode=1" >> dash.conf_TEMP
-  echo "" >> dash.conf_TEMP
+  #unzip  dbootstrap.zip -d $CONF_DIR
+  echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> eskacoin.conf_TEMP
+  echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> eskacoin.conf_TEMP
+  echo "rpcallowip=127.0.0.1" >> eskacoin.conf_TEMP
+  echo "rpcport=$RPCPORT" >> eskacoin.conf_TEMP
+  echo "testnet=1" >> eskacoin.conf_TEMP
+  echo "listen=1" >> eskacoin.conf_TEMP
+  echo "server=1" >> eskacoin.conf_TEMP
+  echo "daemon=1" >> eskacoin.conf_TEMP
+  echo "logtimestamps=1" >> eskacoin.conf_TEMP
+  echo "maxconnections=256" >> eskacoin.conf_TEMP
+  echo "masternode=1" >> eskacoin.conf_TEMP
+  echo "" >> eskacoin.conf_TEMP
  
-  echo "" >> dash.conf_TEMP
-  echo "port=$PORT" >> dash.conf_TEMP
+  echo "" >> eskacoin.conf_TEMP
+  echo "port=$PORT" >> eskacoin.conf_TEMP
   
-  echo "masternodeblsprivkey=$PRIVKEY" >> dash.conf_TEMP
+  echo "masternodeblsprivkey=$PRIVKEY" >> eskacoin.conf_TEMP
   sudo ufw allow $PORT/tcp
 
-  mv dash.conf_TEMP $CONF_DIR/dash.conf
+  mv eskacoin.conf_TEMP $CONF_DIR/eskacoin.conf
   
   #sh ~/bin/wagerrd_$ALIAS.sh
   
-  cat << EOF > /etc/systemd/system/dash_$ALIAS.service
+  cat << EOF > /etc/systemd/system/eskacoin_$ALIAS.service
 [Unit]
-Description=dash_$ALIAS service
+Description=eskacoin_$ALIAS service
 After=network.target
 [Service]
 User=root
 Group=root
 Type=forking
-ExecStart=/usr/local/bin/dashd -daemon -conf=$CONF_DIR/dash.conf -datadir=$CONF_DIR
-ExecStop=/usr/local/bin/dash-cli -conf=$CONF_DIR/dash.conf -datadir=$CONF_DIR stop
+ExecStart=/usr/local/bin/eskacoind -daemon -conf=$CONF_DIR/eskacoin.conf -datadir=$CONF_DIR
+ExecStop=/usr/local/bin/eskacoin-cli -conf=$CONF_DIR/eskacoin.conf -datadir=$CONF_DIR stop
 Restart=always
 PrivateTmp=true
 TimeoutStartSec=10m
@@ -164,8 +164,8 @@ EOF
 
   systemctl daemon-reload
   sleep 10
-  systemctl start dash_$ALIAS.service
-  systemctl enable dash_$ALIAS.service >/dev/null 2>&1
+  systemctl start eskacoin_$ALIAS.service
+  systemctl enable eskacoin_$ALIAS.service >/dev/null 2>&1
   
 #cd $CONF_DIR
 #git clone https://github.com/dashpay/sentinel.git
