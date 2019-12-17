@@ -63,12 +63,11 @@ fi
   #wget https://dash-bootstrap.ams3.digitaloceanspaces.com/testnet/2019-12-11/bootstrap.dat.zip -O dbootstrap.zip   
   unzip ESKACOIN-Linux-Daemon.zip 
   
-  mkdir -p ~/eskacoin
-  sudo mv ~/eskacoin* ~/eskacoin
-  chmod +x ~/eskacoin
- 
-  sudo mv  ~/eskacoin/* /usr/local/bin
   
+  chmod +x eskacoind
+  chmod +x eskacoin-cli
+  sudo cp  eskacoind /usr/local/bin
+  sudo cp  eskacoin-cli /usr/local/bin
   rm -rf ESKACOIN-Linux-Daemon.zip
 
   sudo apt install -y ufw
