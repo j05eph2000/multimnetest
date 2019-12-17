@@ -120,7 +120,7 @@ for i in `seq 1 1 $MNCOUNT`; do
   chmod 755 ~/bin/eskacoin*.sh
 
   mkdir -p $CONF_DIR
-  #unzip  dbootstrap.zip -d $CONF_DIR
+  
   echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> eskacoin.conf_TEMP
   echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> eskacoin.conf_TEMP
   echo "rpcallowip=127.0.0.1" >> eskacoin.conf_TEMP
