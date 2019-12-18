@@ -139,7 +139,7 @@ for i in `seq 1 1 $MNCOUNT`; do
   echo "" >> eskacoin.conf_TEMP
   echo "port=$PORT" >> eskacoin.conf_TEMP
   
-  echo "masternodeblsprivkey=$PRIVKEY" >> eskacoin.conf_TEMP
+  echo "masternodeprivkey=$PRIVKEY" >> eskacoin.conf_TEMP
   sudo ufw allow $PORT/tcp
 
   mv eskacoin.conf_TEMP $CONF_DIR/eskacoin.conf
