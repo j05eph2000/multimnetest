@@ -154,7 +154,7 @@ After=network.target
 User=root
 Group=root
 Type=forking
-ExecStart=/usr/local/bin/eskacoind & -daemon -conf=$CONF_DIR/eskacoin.conf -datadir=$CONF_DIR
+ExecStart=/usr/local/bin/eskacoind -daemon -conf=$CONF_DIR/eskacoin.conf -datadir=$CONF_DIR
 ExecStop=/usr/local/bin/eskacoin-cli -conf=$CONF_DIR/eskacoin.conf -datadir=$CONF_DIR stop
 Restart=always
 PrivateTmp=true
