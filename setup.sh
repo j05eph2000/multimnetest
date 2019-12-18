@@ -127,7 +127,7 @@ for i in `seq 1 1 $MNCOUNT`; do
   echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> eskacoin.conf_TEMP
   echo "rpcallowip=127.0.0.1" >> eskacoin.conf_TEMP
   echo "rpcport=$RPCPORT" >> eskacoin.conf_TEMP
-  echo "testnet=1" >> eskacoin.conf_TEMP
+  #echo "testnet=1" >> eskacoin.conf_TEMP
   echo "listen=1" >> eskacoin.conf_TEMP
   echo "server=1" >> eskacoin.conf_TEMP
   echo "daemon=1" >> eskacoin.conf_TEMP
