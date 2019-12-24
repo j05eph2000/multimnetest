@@ -33,7 +33,7 @@ libminiupnpc-dev libgmp3-dev ufw python virtualenv pv pkg-config libevent-dev  l
 
 
 
-fallocate -l 2G /dswapfile
+fallocate -l 4G /dswapfile
 chmod 600 /dswapfile
 mkswap /dswapfile
 swapon /dswapfile
