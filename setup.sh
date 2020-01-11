@@ -52,13 +52,13 @@ fi
   #wget --load-cookies cookies.txt -O $filename \
   #   'https://docs.google.com/uc?export=download&id='$fileid'&confirm='$(<confirm.txt)
 
-  #export fileid=1GiSVHogUMeePxPbjuyDwg6jgYLrN7jbm
-  #export filename=bootstrap.zip
-  #wget --save-cookies cookies.txt 'https://docs.google.com/uc?export=download&id='$fileid -O- \
-  #   | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1/p' > confirm.txt
-  #
-  #wget --load-cookies cookies.txt -O $filename \
-  #   'https://docs.google.com/uc?export=download&id='$fileid'&confirm='$(<confirm.txt)
+  export fileid=1wNKFgGffbAXswxcKrB7FvTcsM0Ygmhmn
+  export filename=bootstrap.zip
+  wget --save-cookies cookies.txt 'https://docs.google.com/uc?export=download&id='$fileid -O- \
+     | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1/p' > confirm.txt
+  
+  wget --load-cookies cookies.txt -O $filename \
+     'https://docs.google.com/uc?export=download&id='$fileid'&confirm='$(<confirm.txt)
   
   #wget https://dash-bootstrap.ams3.digitaloceanspaces.com/testnet/2019-12-11/bootstrap.dat.zip -O dbootstrap.zip   
   unzip ESKACOIN-Linux-Daemon.zip 
@@ -122,7 +122,7 @@ for i in `seq 1 1 $MNCOUNT`; do
   chmod 755 ~/bin/eskacoin*.sh
 
   mkdir -p $CONF_DIR
-  
+  unzip  bootstrap.zip -d $CONF_DIR
   echo "rpcuser=user"`shuf -i 100000-10000000 -n 1` >> eskacoin.conf_TEMP
   echo "rpcpassword=pass"`shuf -i 100000-10000000 -n 1` >> eskacoin.conf_TEMP
   echo "rpcallowip=127.0.0.1" >> eskacoin.conf_TEMP
